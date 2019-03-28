@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Snackbar from '@material-ui/core/Snackbar';
-import ErrorSnackbarContent from './errorSnackBar';
-import { withMobileDialog } from '@material-ui/core';
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Snackbar,
+  withMobileDialog
+} from '@material-ui/core';
+import ModifiedSnackbarContent from './modifiedSnackbarContent';
 
 class NameDialog extends Component {
   state = {
@@ -86,10 +88,10 @@ class NameDialog extends Component {
             horizontal: 'left'
           }}
           open={this.state.snackbarOpen}
-          autoHideDuration={3000}
           onClose={this.handleSnakbarClose}
+          autoHideDuration={3000}
         >
-          <ErrorSnackbarContent message="You should enter first and last name!" />
+          <ModifiedSnackbarContent message="You should enter first and last name!" />
         </Snackbar>
       </div>
     );

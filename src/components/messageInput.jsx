@@ -7,7 +7,7 @@ import {
   Divider
 } from '@material-ui/core';
 import red from '@material-ui/core/colors/red';
-import SendIcon from '@material-ui/icons/Send';
+import SendIcon from '@material-ui/icons/SendOutlined';
 
 class MessageInput extends Component {
   state = {

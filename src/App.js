@@ -6,15 +6,17 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  CircularProgress
+  CircularProgress,
+  Snackbar,
+  withStyles
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import { animateScroll as scroll } from 'react-scroll';
+import MenuIcon from '@material-ui/icons/Menu';
 import NameDialog from './components/nameDialog';
 import MessageInput from './components/messageInput';
 import DrawerContent from './components/drawerContent';
 import Chat from './components/chat';
+import ModifiedSnackbarContent from './components/modifiedSnackbarContent';
 
 import './App.css';
 
@@ -61,6 +63,11 @@ class App extends Component {
   socket = configureSocket((event, data) => {
     switch (event) {
       case 'connect':
+        this.setState({ message: 'Connection established!' });
+        setTimeout(
+          () => this.setState({ connected: true, message: null }),
+          1500
+        );
         break;
       case 'CONNECTED_USERS':
         this.setState({ users: data });
@@ -97,6 +104,13 @@ class App extends Component {
           this.setState({ users });
         }
         break;
+      case 'ERROR':
+        this.setState({ snackbarOpen: true, message: data });
+        setTimeout(() => document.location.reload(true), 3500);
+        break;
+      case 'disconnect':
+        this.setState({ connected: false, message: data });
+        break;
 
       default:
         break;
@@ -110,6 +124,9 @@ class App extends Component {
       user: null,
       loading: true,
       mobileOpen: false,
+      snackbarOpen: false,
+      message: null,
+      connected: true,
       messages: [],
       users: []
     };
@@ -131,14 +148,37 @@ class App extends Component {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
-  onSend = text => {
-    console.log(text);
+  handleSnakbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
+    this.setState({ snackbarOpen: false, message: null });
+  };
+
+  onSend = text => {
     emitNewMessage(text);
   };
 
+  getSnackbarVariant = () => {
+    const { message, connected, snackbarOpen } = this.state;
+    if (message === 'Connection established!') {
+      return 'success';
+    } else {
+      return snackbarOpen || !connected ? 'error' : 'success';
+    }
+  };
+
   render() {
-    const { messages, user, users, loading } = this.state;
+    const {
+      messages,
+      user,
+      users,
+      loading,
+      message,
+      connected,
+      snackbarOpen
+    } = this.state;
     const { classes, theme } = this.props;
 
     if (loading) {
@@ -207,7 +247,18 @@ class App extends Component {
         </nav>
 
         <main className={classes.content}>
-          <Chat messages={messages} className="chat" />
+          <Chat messages={messages} />
+          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            open={snackbarOpen | !connected}
+            onClose={snackbarOpen & connected && this.handleSnakbarClose}
+            autoHideDuration={snackbarOpen & connected && 3000}
+          >
+            <ModifiedSnackbarContent
+              message={message}
+              variant={this.getSnackbarVariant()}
+            />
+          </Snackbar>
           <div className={classes.toolbar} />
         </main>
       </div>

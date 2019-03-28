@@ -50,6 +50,20 @@ export const configureSocket = dispatch => {
     console.log('USER_DISCONNECTED', user);
   });
 
+  socket.on('ERROR', error => {
+    // app should be refreshed
+    dispatch('ERROR', error);
+    console.log('ERROR', error);
+  });
+
+  socket.on('disconnect', reason => {
+    if (reason === 'io server disconnect') {
+      socket.connect();
+    } else {
+      dispatch('disconnect', 'You are not connected...');
+    }
+  });
+
   return socket;
 };
 
