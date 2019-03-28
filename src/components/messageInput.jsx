@@ -21,8 +21,7 @@ class MessageInput extends Component {
   };
 
   handleSendMessage = text => {
-    if (text && text.trim() !== '') {
-      this.props.onSend(text);
+    if (text && text.trim() !== '' && this.props.onSend(text)) {
       this.setState({ text: '' });
     }
   };

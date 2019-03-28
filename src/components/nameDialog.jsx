@@ -91,7 +91,10 @@ class NameDialog extends Component {
           onClose={this.handleSnakbarClose}
           autoHideDuration={3000}
         >
-          <ModifiedSnackbarContent message="You should enter first and last name!" />
+          <ModifiedSnackbarContent
+            message="You should enter first and last name!"
+            variant="error"
+          />
         </Snackbar>
       </div>
     );

@@ -157,7 +157,10 @@ class App extends Component {
   };
 
   onSend = text => {
-    emitNewMessage(text);
+    if (this.state.connected) {
+      emitNewMessage(text);
+    }
+    return this.state.connected;
   };
 
   getSnackbarVariant = () => {
