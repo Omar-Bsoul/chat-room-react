@@ -141,6 +141,7 @@ class App extends Component {
   }
 
   onNameSelected = fullname => {
+    this.setState({ loading: true });
     emitNewUser(fullname);
   };
 
