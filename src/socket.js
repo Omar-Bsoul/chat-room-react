@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const socket = io('http://omar-pc:4000');
+const socket = io('https://sp-chat-room-be.herokuapp.com/');
 
 export const configureSocket = dispatch => {
   socket.on('connect', () => {
