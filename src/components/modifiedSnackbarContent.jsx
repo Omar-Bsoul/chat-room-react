@@ -1,7 +1,7 @@
 import React from 'react';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import ErrorIcon from '@material-ui/icons/Error';
-import OkIcon from '@material-ui/icons/Check';
+import SuccessIcon from '@material-ui/icons/CheckCircle';
 
 function ModifiedSnackbarContent(props) {
   const { message, variant } = props;
@@ -31,7 +31,7 @@ function ModifiedSnackbarContent(props) {
         style={{ backgroundColor: '#46C646' }}
         message={
           <span style={{ display: 'flex', alignItems: 'center' }}>
-            <OkIcon
+            <SuccessIcon
               style={{
                 fontSize: 20,
                 opacity: 0.9,

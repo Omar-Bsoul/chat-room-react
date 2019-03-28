@@ -198,7 +198,7 @@ class App extends Component {
     }
 
     const drawer = (
-      <div style={{ width: this.state.drawerWidth }}>
+      <div style={{ width: this.state.drawerWidth, marginTop: 24 }}>
         <DrawerContent users={users} />
       </div>
     );
